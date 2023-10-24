@@ -7,9 +7,14 @@
         <div class="col-10 border p-3">
             <form action="api" method="post">
                 <label for="date">Ange datum:</label><br/>
-                <input type="date" name="date" id="date" /><br/>
+                <input type="date" name="date" id="date" min="2022-11-01"/><br/>
                 <label for="prisklass">Ange prisklass:</label><br/>
-                <input type="text" name="prisklass" id="prisklass" /><br/>
+                <select class="form-select" aria-label="Default select example" name="prisklass" id="prisklass">
+                    <option value="SE1">Luleå / Norra Sverige</option>
+                    <option value="SE2">Sundsvall / Norra Mellansverige</option>
+                    <option value="SE3">Stockholm / Södra Mellansverige</option>
+                    <option value="SE4">Malmö / Södra Sverige</option>
+                </select><br/>
                 <button type="submit" class="btn btn-primary mt-5">Submit</button> 
             </form>
         </div>

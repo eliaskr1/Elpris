@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from application import func
 
 app = Flask(__name__)
@@ -13,7 +13,12 @@ def form():
     '''Funktion för endpointen "form"'''
     return render_template("form.html")
 
-@app.route("/api", methods=["POST"])
+@app.route("/api", methods=["POST"])  # type: ignore
 def api_post():
     '''Funktion som callas när man fyllt formulär på "form" sidan'''
-    pass # Byts ut med return sats
+    date = request.form["date"]
+    prisklass = request.form["prisklass"]
+
+    data = func.elpris_data_to_html_table(date, prisklass)
+
+    return render_template("table.html", data=data)
