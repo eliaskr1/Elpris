@@ -6,8 +6,8 @@ import pandas as pd
 
 
 def elpris_data_to_html_table(date, prisklass, columns=None):
-    '''Konverterar angiven data i formatet åååå-mm-dd till json 
-    formatterad dict med elpriser för angiven dag och prisklass'''
+    '''Konverterar angiven data i formatet åååå-mm-dd till html 
+    tabell med elpriser för angiven dag och prisklass'''
 
     year, month, day = date.split('-')
     context = ssl._create_unverified_context()
