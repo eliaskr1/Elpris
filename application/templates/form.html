@@ -7,7 +7,7 @@
         <div class="col-10 border p-3">
             <form action="api" method="post">
                 <label for="date">Ange datum:</label><br/>
-                <input type="date" name="date" id="date" min="2022-11-01"/><br/>
+                <input type="date" name="date" id="date" min="2022-11-01" max={{max_date}} /><br/>
                 <label for="prisklass">Ange prisklass:</label><br/>
                 <select class="form-select" aria-label="Default select example" name="prisklass" id="prisklass">
                     <option value="SE1">Luleå / Norra Sverige</option>
