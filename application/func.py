@@ -26,7 +26,7 @@ def json_data_to_html_table(api_url, columns=None):
         df['Tid'] = pd.to_datetime(df['Tid'])
 
         # Formatera datumen som tidssträngar i ett önskat format
-        df['Tid'] = df['Tid'].dt.strftime('%H:%M:%S')
+        df['Tid'] = df['Tid'].dt.strftime('%H:%M')
 
         if columns==None:
             table_data = df.to_html(classes="table p-5", justify="left")    
