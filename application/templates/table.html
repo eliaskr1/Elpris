@@ -1,4 +1,21 @@
 {% extends "layout.html" %}
 {% block content %}
-{{ data|safe }}
+<div class="container">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <h1 class="text-center">Elpris</h1>
+            <h2 class="text-center">Elpriser {{date}} för prisklass: {{priceclass}}</h2>
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            {{ table|safe }}
+        </div>
+        <div class="col-6">
+            {{ fig|safe }}
+        </div>
+    </div>
+</div>
 {% endblock %}

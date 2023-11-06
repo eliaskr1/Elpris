@@ -16,21 +16,23 @@ def form():
     max_date=func.get_max_date()
     return render_template("form.html", max_date=max_date)
 
-@app.route("/api", methods=["POST"])
+@app.route("/api", methods=["POST"]) # type: ignore
 def api_post():
     '''Funktion som callas när man fyllt formulär på "form" sidan'''
     try:
         date = request.form["date"]
         year, month, day = date.split('-')
-        prisklass = request.form["prisklass"]
-        api_url = f"https://www.elprisetjustnu.se/api/v1/prices/{year}/{month}-{day}_{prisklass}.json"
+        priceclass = request.form["prisklass"]
+        api_url = f"https://www.elprisetjustnu.se/api/v1/prices/{year}/{month}-{day}_{priceclass}.json"
 
-        data = func.json_data_to_html_table(api_url)
-
-        return render_template("table.html", data=data)
+        table = func.json_data_to_html_table(api_url)
+        fig = func.json_data_to_plotly_diagram(api_url)
+        print(table)
+        print(fig)
+        return render_template("table.html", table=table, fig=fig, date=date, priceclass=priceclass)
     except ValueError as ve:
         # Felhantering för tomt datum fält i "/form" endpoint. 
-        return "Vänligen ange giltigt datum."
+        return ve
 
 @app.route("/api", methods=["GET"])
 def api_get():
