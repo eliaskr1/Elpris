@@ -42,27 +42,13 @@ def json_data_to_html_table(api_url, columns=None):
         # Plats för annan eventuell felhantering
         return "Ett fel uppstod. Kontakta administratören för hjälp."
 
-
-
-def get_max_date():
-    '''Returnerar en sträng med morgondagens datum
-    i formatet "åååå-mm-dd'''
-    date = datetime.today()
-    new_date = date + timedelta(days=1)
-    day = new_date.day
-    month = new_date.month
-    year = new_date.year
-    max_date = f"{year}-{month:02d}-{day:02d}"
-    
-    return max_date
-
 def json_data_to_plotly_diagram(api_url):
     context = ssl._create_unverified_context()
     try:
         json_data = request.urlopen(api_url, context=context).read()
         data = json.loads(json_data)
         df = pd.DataFrame(data)
-        # Tar bort EXR och time_end kolumnerna
+        # Tar bort onödiga kolumner
         df.drop(df.columns[2], axis=1, inplace=True)
         df.drop(df.columns[3], axis=1, inplace=True)
         df.drop(df.columns[2], axis=1, inplace=True)
@@ -75,5 +61,16 @@ def json_data_to_plotly_diagram(api_url):
         diagram = fig.to_html()
         return diagram
     except Exception as e:
-        return e
+        return ""
         
+def get_max_date():
+    '''Returnerar en sträng med morgondagens datum
+    i formatet "åååå-mm-dd'''
+    date = datetime.today()
+    new_date = date + timedelta(days=1)
+    day = new_date.day
+    month = new_date.month
+    year = new_date.year
+    max_date = f"{year}-{month:02d}-{day:02d}"
+    
+    return max_date
