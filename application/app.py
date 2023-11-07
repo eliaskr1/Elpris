@@ -25,8 +25,8 @@ def api_post():
         priceclass = request.form["prisklass"]
         api_url = f"https://www.elprisetjustnu.se/api/v1/prices/{year}/{month}-{day}_{priceclass}.json"
 
-        table = func.json_data_to_html_table(api_url)
-        fig = func.json_data_to_plotly_diagram(api_url)
+        table = func.pandas_df_to_html_table(api_url)
+        fig = func.pandas_df_to_plotly_diagram(api_url)
         print(table)
         print(fig)
         return render_template("table.html", table=table, fig=fig, date=date, priceclass=priceclass)
