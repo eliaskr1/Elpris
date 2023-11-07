@@ -4,6 +4,14 @@
     <div class="row p-5">
         <div class="col-1"></div>
         <div class="col-10 border p-3">
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+                Vänligen fyll i datum!
+            </div>
+            {% endif %}
+            <h3>Sök efter elpriser</h3><br>
+            <p>Ange för vilket datum och för vilken prisklass du vill se elpriser.</p>
+            <p class="fs-6 fw-light fst-italic">OBS: Morgondagens elpriser publiceras runt kl 13.00 varje dag. Historisk data är som äldst från 2022-11-01</p>
             <form action="api" method="post">
                 <label for="date">Ange datum:</label><br/>
                 <input type="date" name="date" id="date" min="2022-11-01" max={{max_date}} placeholder="{{placeholder}}"/><br/>

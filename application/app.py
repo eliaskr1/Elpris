@@ -32,7 +32,8 @@ def api_post():
         return render_template("table.html", table=table, fig=fig, date=date, priceclass=priceclass)
     except ValueError as ve:
         # Felhantering för tomt datum fält i "/form" endpoint. 
-        return ve
+        max_date=func.get_max_date()
+        return render_template("form.html", max_date=max_date, error=ve)
 
 @app.route("/api", methods=["GET"])
 def api_get():
