@@ -49,7 +49,7 @@ def pandas_df_to_html_table(api_url, columns=None):
         # Plats för annan eventuell felhantering
         return "Ett fel uppstod. Kontakta administratören för hjälp."
 
-def pandas_df_to_plotly_diagram(api_url):
+def pandas_df_to_plotly_diagram(api_url): # Försökte först göra plotly och html table i samma funktion men stötte på flera problem som var bökiga att hantera. Därav ligger de i separata funktioner
     '''Skapar ett diagram utan onödiga kolumner
     utav en pandas dataframe för min applikation.
     args: URL till elpris APIn'''
@@ -68,6 +68,7 @@ def pandas_df_to_plotly_diagram(api_url):
         fig = px.bar(data_frame=df["SEK per KWH"])
         fig.update_xaxes(title_text="Tid")
         fig.update_yaxes(title_text="SEK per KWH")
+        # Konverterar diagrammet till exekverbar HTML
         diagram = fig.to_html()
         return diagram
     except Exception as e:
