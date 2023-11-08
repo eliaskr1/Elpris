@@ -9,11 +9,14 @@ import plotly.express as px
 def json_data_to_pandas_df(api_url):
     '''Konverterar json data till en pandas dataframe
     args: URL till api för att hämta json data'''
-    context = ssl._create_unverified_context()
-    json_data = request.urlopen(api_url, context=context).read()
-    data = json.loads(json_data)
-    df = pd.DataFrame(data)
-    return df
+    try:
+        context = ssl._create_unverified_context()
+        json_data = request.urlopen(api_url, context=context).read()
+        data = json.loads(json_data)
+        df = pd.DataFrame(data)
+        return df
+    except Exception as e:
+        return e
 
 def pandas_df_to_html_table(api_url, columns=None):
     '''Ändrar pandas dataframe till en läsbar
@@ -23,6 +26,7 @@ def pandas_df_to_html_table(api_url, columns=None):
     try:
         df = json_data_to_pandas_df(api_url)
         # Tar bort EXR och time_end kolumnerna
+        
         df.drop(df.columns[2], axis=1, inplace=True)
         df.drop(df.columns[3], axis=1, inplace=True)
 
@@ -42,12 +46,8 @@ def pandas_df_to_html_table(api_url, columns=None):
 
         return table_data
     except Exception as e:
-        # Om man försöker ladda elpriser som inte har publicerats ännu.
-        if isinstance(e, error.HTTPError) and e.code == 404:
-            return "Morgondagens elpriser har inte publicerats ännu. Elpriserna publiceras vanligtvis runt kl 13.00. Försök igen senare."
-
-        # Plats för annan eventuell felhantering
-        return "Ett fel uppstod. Kontakta administratören för hjälp."
+        # Om man skickar in tomt datum
+        return e    
 
 def pandas_df_to_plotly_diagram(api_url): # Försökte först göra plotly och html table i samma funktion men stötte på flera problem som var bökiga att hantera. Därav ligger de i separata funktioner
     '''Skapar ett diagram utan onödiga kolumner

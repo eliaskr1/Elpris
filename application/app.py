@@ -32,14 +32,18 @@ def api_post():
 
         table = func.pandas_df_to_html_table(api_url)
         fig = func.pandas_df_to_plotly_diagram(api_url)
-
-        return render_template("table.html", table=table, fig=fig, date=date, priceclass=priceclass)
+        if table and fig:
+            return render_template("table.html", table=table, fig=fig, date=date, priceclass=priceclass)
+        else:
+            # Om morgondagens elpriser inte har publicerats ännu.
+            max_date=func.get_max_date()
+            return render_template("form.html", max_date=max_date, error_no_prices="error")
     except ValueError as ve:
         '''Felhantering för tomt datum fält i "/form" endpoint.
         Laddar "/api" endpoint men skickar istället med "form.html"
         templaten och ett felmeddelande.''' 
         max_date=func.get_max_date()
-        return render_template("form.html", max_date=max_date, error=ve)
+        return render_template("form.html", max_date=max_date, error_no_date=ve)
 
 @app.route("/api", methods=["GET"])
 def api_get():

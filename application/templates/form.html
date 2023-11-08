@@ -4,9 +4,14 @@
     <div class="row p-5">
         <div class="col-1"></div>
         <div class="col-10 border p-3">
-            {% if error %}
+            {% if error_no_date %}
             <div class="alert alert-danger" role="alert">
                 Vänligen fyll i datum!
+            </div>
+            {% endif %}
+            {% if error_no_prices %}
+            <div class="alert alert-danger" role="alert">
+                Morgondagens elpriser har inte publicerats ännu. Elpriserna publiceras vanligtvis runt kl 13.00. Försök igen senare.
             </div>
             {% endif %}
             <h3>Sök efter elpriser</h3><br>
