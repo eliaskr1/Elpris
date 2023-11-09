@@ -16,6 +16,7 @@ def json_data_to_pandas_df(api_url):
         df = pd.DataFrame(data)
         return df
     except Exception as e:
+        # Om man skickar in tomt datum
         return e
 
 def pandas_df_to_html_table(api_url, columns=None):
@@ -27,6 +28,10 @@ def pandas_df_to_html_table(api_url, columns=None):
         df = json_data_to_pandas_df(api_url)
         # Tar bort EXR och time_end kolumnerna
         
+        # Om man söker efter morgondagens datum innan de publiceras.
+        if type(df) == error.HTTPError:
+            return None
+
         df.drop(df.columns[2], axis=1, inplace=True)
         df.drop(df.columns[3], axis=1, inplace=True)
 
@@ -45,9 +50,11 @@ def pandas_df_to_html_table(api_url, columns=None):
             table_data = df.to_html(columns=columns,classes="table p-5", justify="left")
 
         return table_data
+    except error.HTTPError as e:
+        return e
     except Exception as e:
-        # Om man skickar in tomt datum
-        return e    
+        return e
+    
 
 def pandas_df_to_plotly_diagram(api_url): # Försökte först göra plotly och html table i samma funktion men stötte på flera problem som var bökiga att hantera. Därav ligger de i separata funktioner
     '''Skapar ett diagram utan onödiga kolumner
